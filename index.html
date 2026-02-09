@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To My Dearest Hredy 💖</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Indie+Flower&family=Mochiy+Pop+One&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Comic Neue', cursive;
+            background: linear-gradient(135deg, #ffd6e7 0%, #c1e3ff 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #5a3d5c;
+        }
+        
+        /* Authentication Screen */
+        .auth-screen {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: linear-gradient(135deg, #ff9ec0 0%, #7bc6ff 100%);
+            z-index: 1000;
+            transition: opacity 0.5s ease;
+        }
+        
+        .auth-container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            border: 8px solid #ffb6c1;
+        }
+        
+        .auth-container h1 {
+            font-family: 'Mochiy Pop One', sans-serif;
+            color: #ff6b9d;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+        }
+        
+        .auth-container p {
+            margin-bottom: 30px;
+            font-size: 1.2rem;
+            color: #5a3d5c;
+        }
+        
+        .cat-lock {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #ff9ec0;
+        }
+        
+        .birthday-input {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .birthday-input input {
+            padding: 15px;
+            border-radius: 50px;
+            border: 3px solid #ffb6c1;
+            font-size: 1.2rem;
+            text-align: center;
+            font-family: 'Comic Neue', cursive;
+            outline: none;
+            transition: all 0.3s;
+        }
+        
+        .birthday-input input:focus {
+            border-color: #ff6b9d;
+            box-shadow: 0 0 10px rgba(255, 107, 157, 0.5);
+        }
+        
+        .auth-btn {
+            background-color: #ff9ec0;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Mochiy Pop One', sans-serif;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .auth-btn:hover {
+            background-color: #ff6b9d;
+            transform: scale(1.05);
+        }
+        
+        .error-message {
+            color: #ff4444;
+            margin-top: 15px;
+            font-weight: bold;
+            display: none;
+        }
+        
+        /* Main Website */
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            display: none;
+            position: relative;
+            border: 10px solid #ffb6c1;
+        }
+        
+        .header {
+            background: linear-gradient(to right, #ff9ec0, #7bc6ff);
+            padding: 25px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header h1 {
+            font-family: 'Mochiy Pop One', sans-serif;
+            font-size: 3rem;
+            color: white;
+            text-shadow: 3px 3px 0 #ff6b9d;
+            margin-bottom: 10px;
+        }
+        
+        .header h1 span {
+            color: #ffff99;
+            font-family: 'Indie Flower', cursive;
+            font-size: 3.5rem;
+        }
+        
+        .header p {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.95);
+            font-weight: 700;
+        }
+        
+        .cat {
+            position: absolute;
+            font-size: 2.5rem;
+            animation: float 6s infinite ease-in-out;
+            z-index: 1;
+        }
+        
+        .cat:nth-child(1) { top: 20%; left: 5%; animation-delay: 0s; }
+        .cat:nth-child(2) { top: 10%; right: 10%; animation-delay: 1s; }
+        .cat:nth-child(3) { bottom: 15%; left: 15%; animation-delay: 2s; }
+        .cat:nth-child(4) { bottom: 20%; right: 5%; animation-delay: 3s; }
+        .cat:nth-child(5) { top: 50%; left: 40%; animation-delay: 4s; }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-25px) rotate(5deg); }
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .message-box {
+            background-color: #fff9fc;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-left: 8px solid #ff9ec0;
+            box-shadow: 0 8px 20px rgba(255, 155, 190, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .message-box h2 {
+            font-family: 'Mochiy Pop One', sans-serif;
+            font-size: 2.2rem;
+            color: #ff6b9d;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .message-box p {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .apology-text {
+            font-family: 'Indie Flower', cursive;
+            background-color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border: 3px dashed #ff9ec0;
+            font-size: 1.4rem;
+            text-align: center;
+            line-height: 1.8;
+        }
+        
+        .hredy-special {
+            background-color: #ffffcc;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: center;
+            border: 3px solid #ffcc00;
+            box-shadow: 0 5px 15px rgba(255, 204, 0, 0.2);
+        }
+        
+        .hredy-special h3 {
+            font-family: 'Mochiy Pop One', sans-serif;
+            color: #ff9900;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .hredy-special p {
+            font-size: 1.3rem;
+            color: #5a3d5c;
+        }
+        
+        .photo-section {
+            background-color: #e6f7ff;
+            border-radius: 20px;
+            padding: 25px;
+            margin: 30px 0;
+            text-align: center;
+            border: 3px solid #7bc6ff;
+        }
+        
+        .photo-section h3 {
+            font-family: 'Mochiy Pop One', sans-serif;
+            color: #3399ff;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        
+        .photo-upload {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .upload-area {
+            width: 200px;
+            height: 200px;
+            border: 4px dashed #7bc6ff;
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            background-color: #f0f9ff;
+            transition: all 0.3s;
+        }
+        
+        .upload-area:hover {
+            background-color: #e0f2ff;
+            border-color: #3399ff;
+        }
+        
+        .upload-area i {
+            font-size: 4rem;
+            color: #7bc6ff;
+        }
+        
+        #photoPreview {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 15px;
+            display: none;
+        }
+        
+        .interactive-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .cat-btn, .hearts-btn, .promise-btn, .special-btn {
+            background-color: #ff9ec0;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(255, 155, 190, 0.3);
+            font-family: 'Mochiy Pop One', sans-serif;
+        }
+        
+        .cat-btn { background-color: #ff9ec0; }
+        .hearts-btn { background-color: #ff6b9d; }
+        .promise-btn { background-color: #7bc6ff; }
+        .special-btn { background-color: #ffcc00; color: #333; }
+        
+        .cat-btn:hover, .hearts-btn:hover, .promise-btn:hover, .special-btn:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .animation-area {
+            height: 250px;
+            background-color: #fff9fc;
+            border-radius: 20px;
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            border: 4px dashed #ffccdd;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 25px;
+            background-color: #ffeff5;
+            color: #5a3d5c;
+            font-weight: 700;
+            border-top: 3px solid #ffccdd;
+            font-size: 1.2rem;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .cats, .hearts, .fish {
+            position: absolute;
+            font-size: 2.5rem;
+            opacity: 0;
+            animation: fall 6s linear forwards;
+        }
+        
+        @keyframes fall {
+            0% { 
+                opacity: 0;
+                transform: translateY(-100px) rotate(0deg); 
+            }
+            10% { opacity: 1; }
+            100% { 
+                opacity: 0;
+                transform: translateY(250px) rotate(360deg); 
+            }
+        }
+        
+        .promise-container {
+            background-color: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            display: none;
+        }
+        
+        .promise-container h3 {
+            color: #ff6b9d;
+            margin-bottom: 20px;
+            text-align: center;
+            font-family: 'Mochiy Pop One', sans-serif;
+            font-size: 1.8rem;
+        }
+        
+        .promise-list {
+            list-style-type: none;
+        }
+        
+        .promise-list li {
+            padding: 15px;
+            margin-bottom: 15px;
+            background-color: #fff9fc;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .promise-list i {
+            color: #ff6b9d;
+            font-size: 1.5rem;
+        }
+        
+        .special-message {
+            background-color: #ffffcc;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+            display: none;
+            text-align: center;
+            border: 3px solid #ffcc00;
+        }
+        
+        .special-message h3 {
+            color: #ff9900;
+            margin-bottom: 15px;
+            font-family: 'Mochiy Pop One', sans-serif;
+            font-size: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2.2rem; }
+            .header h1 span { font-size: 2.5rem; }
+            .message-box h2 { font-size: 1.8rem; }
+            .interactive-section { flex-direction: column; }
+            .cat-btn, .hearts-btn, .promise-btn, .special-btn { width: 100%; }
+            .auth-container h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Authentication Screen -->
+    <div class="auth-screen" id="authScreen">
+        <div class="auth-container">
+            <div class="cat-lock">🐱🔒</div>
+            <h1>Purr-sonal Apology for Hredy</h1>
+            <p>This special message is only for my dearest Hredy<br>Please enter your birthday to continue</p>
+            
+            <div class="birthday-input">
+                <input type="text" id="birthdayInput" placeholder="DD Month (e.g., 16 May)" autocomplete="off">
+                <button class="auth-btn" id="unlockBtn">Unlock with Birthday 🗝️</button>
+            </div>
+            
+            <div class="error-message" id="errorMsg">Oops! That's not the right birthday. Try again! 🐾</div>
+            
+            <p style="margin-top: 20px; font-size: 1rem; color: #888;">
+                Hint: It's the day when the most amazing person was born!
+            </p>
+        </div>
+    </div>
+
+    <!-- Main Website Content -->
+    <div class="container" id="mainWebsite">
+        <div class="header">
+            <div class="cat">🐱</div>
+            <div class="cat">😻</div>
+            <div class="cat">🐈</div>
+            <div class="cat">😽</div>
+            <div class="cat">🐾</div>
+            
+            <h1>To My Dearest <span>Hredy</span></h1>
+            <p>This purr-fect apology is just for you, my love 💖</p>
+        </div>
+        
+        <div class="content">
+            <div class="message-box">
+                <h2>I'm So Sorry, My Love 😿</h2>
+                <p>My dearest Hredy, I know I messed up and I'm truly sorry for hurting you.</p>
+                
+                <div class="apology-text">
+                    <p>Every moment without you feels empty like a house without a purring cat. I regret our argument and the pain I've caused you. You mean everything to me, and I promise to be better, to listen more, and to always cherish what we have.</p>
+                    <p>Please forgive this silly kitten. I can't imagine my life without you in it. 🐱💕</p>
+                </div>
+                
+                <p>You are the most amazing person in my world, and I will do whatever it takes to make things right.</p>
+            </div>
+            
+            <div class="hredy-special">
+                <h3>Just For Hredy 💝</h3>
+                <p>Did you know that "Hredy" spelled backwards is "Yderh" which sounds like "Yearh" which is the sound a happy cat makes! 😸</p>
+                <p>You're more precious to me than a basket of sleeping kittens! 🐈‍⬛</p>
+            </div>
+            
+            <div class="photo-section">
+                <h3>Our Purr-fect Memories 📸</h3>
+                <div class="photo-upload">
+                    <div class="upload-area" id="uploadArea">
+                        <i class="fas fa-camera"></i>
+                        <img id="photoPreview" alt="Your photo">
+                    </div>
+                    <p>Click to upload a photo of us or just you!</p>
+                    <input type="file" id="photoInput" accept="image/*" style="display: none;">
+                </div>
+            </div>
+            
+            <div class="interactive-section">
+                <button class="cat-btn" id="catBtn">
+                    <i class="fas fa-cat"></i> Send You Kittens
+                </button>
+                <button class="hearts-btn" id="heartsBtn">
+                    <i class="fas fa-heart"></i> Show My Love
+                </button>
+                <button class="promise-btn" id="promiseBtn">
+                    <i class="fas fa-handshake"></i> My Cat Promises
+                </button>
+                <button class="special-btn" id="specialBtn">
+                    <i class="fas fa-star"></i> Hredy's Special
+                </button>
+            </div>
+            
+            <div class="animation-area" id="animationArea">
+                <p id="defaultMessage">Click the buttons to see my love for you! 🐱💖</p>
+            </div>
+            
+            <div class="promise-container" id="promiseContainer">
+                <h3>My Cat Promises to You 😻</h3>
+                <ul class="promise-list">
+                    <li><i class="fas fa-paw"></i> I will always purr when you're around (metaphorically!)</li>
+                    <li><i class="fas fa-paw"></i> I will communicate better instead of hissing during arguments</li>
+                    <li><i class="fas fa-paw"></i> I will be more patient and understanding like a calm cat</li>
+                    <li><i class="fas fa-paw"></i> I will always make time for cuddles and us-time</li>
+                    <li><i class="fas fa-paw"></i> I will never take our love for granted, just like a cat never takes treats for granted!</li>
+                </ul>
+            </div>
+            
+            <div class="special-message" id="specialMessage">
+                <h3>Just For Hredy 🎀</h3>
+                <p>My dearest Hredy, you're more special than a rare breed of cat! 🐈💕</p>
+                <p>Your smile brightens my day more than a sunbeam for a napping cat. ☀️</p>
+                <p>I promise to always be there for you, through all the ups and downs. We're a purr-fect pair! 😽</p>
+                <p style="margin-top: 15px; font-size: 1.5rem; color: #ff6b9d;">I love you more than cats love cardboard boxes! 📦❤️</p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>With all my love, purrs, and headbutts, waiting for your forgiveness ❤️🐾</p>
+            <p style="margin-top: 10px; font-size: 1rem;">P.S. You're the cat's meow! 😻</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Authentication Elements
+            const authScreen = document.getElementById('authScreen');
+            const mainWebsite = document.getElementById('mainWebsite');
+            const unlockBtn = document.getElementById('unlockBtn');
+            const birthdayInput = document.getElementById('birthdayInput');
+            const errorMsg = document.getElementById('errorMsg');
+            
+            // Main Website Elements
+            const catBtn = document.getElementById('catBtn');
+            const heartsBtn = document.getElementById('heartsBtn');
+            const promiseBtn = document.getElementById('promiseBtn');
+            const specialBtn = document.getElementById('specialBtn');
+            const animationArea = document.getElementById('animationArea');
+            const defaultMessage = document.getElementById('defaultMessage');
+            const promiseContainer = document.getElementById('promiseContainer');
+            const specialMessage = document.getElementById('specialMessage');
+            const uploadArea = document.getElementById('uploadArea');
+            const photoInput = document.getElementById('photoInput');
+            const photoPreview = document.getElementById('photoPreview');
+            
+            // Authentication Logic
+            unlockBtn.addEventListener('click', function() {
+                const input = birthdayInput.value.trim().toLowerCase();
+                
+                // Accept various formats of "16 May"
+                if (input === '16 may' || input === '16th may' || 
+                    input === 'may 16' || input === 'may 16th' ||
+                    input === '16/5' || input === '5/16') {
+                    
+                    // Success - Hide auth screen, show main website
+                    authScreen.style.opacity = '0';
+                    
+                    setTimeout(() => {
+                        authScreen.style.display = 'none';
+                        mainWebsite.style.display = 'block';
+                        
+                        // Add some cute effects
+                        document.body.style.background = "linear-gradient(135deg, #ffd6e7 0%, #c1e3ff 100%)";
+                        
+                        // Play a cute meow sound (if allowed by browser)
+                        try {
+                            const meow = new Audio('data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAA==');
+                            meow.volume = 0.3;
+                            meow.play().catch(e => console.log("Audio play failed (user gesture required)"));
+                        } catch (e) {}
+                        
+                    }, 500);
+                    
+                } else {
+                    // Show error message
+                    errorMsg.style.display = 'block';
+                    birthdayInput.style.borderColor = '#ff4444';
+                    birthdayInput.style.boxShadow = '0 0 10px rgba(255, 68, 68, 0.5)';
+                    
+                    // Shake animation for wrong input
+                    birthdayInput.style.animation = 'shake 0.5s';
+                    setTimeout(() => {
+                        birthdayInput.style.animation = '';
+                    }, 500);
+                }
+            });
+            
+            // Allow Enter key to submit
+            birthdayInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    unlockBtn.click();
+                }
+            });
+            
+            // Add shake animation for error
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes shake {
+                    0%, 100% { transform: translateX(0); }
+                    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                    20%, 40%, 60%, 80% { transform: translateX(5px); }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Cat animation
+            catBtn.addEventListener('click', function() {
+                defaultMessage.classList.add('hidden');
+                animationArea.innerHTML = '';
+                promiseContainer.style.display = 'none';
+                specialMessage.style.display = 'none';
+                
+                for (let i = 0; i < 20; i++) {
+                    const cat = document.createElement('div');
+                    cat.classList.add('cats');
+                    
+                    // Different cat emojis
+                    const catEmojis = ['🐱', '😺', '😸', '😹', '😻', '😼', '😽', '🙀', '😿', '😾', '🐈', '🐈‍⬛'];
+                    cat.innerHTML = catEmojis[Math.floor(Math.random() * catEmojis.length)];
+                    
+                    cat.style.left = Math.random() * 100 + '%';
+                    cat.style.animationDelay = Math.random() * 3 + 's';
+                    cat.style.fontSize = (Math.random() * 25 + 25) + 'px';
+                    animationArea.appendChild(cat);
+                }
+                
+                // Reset after animation
+                setTimeout(() => {
+                    animationArea.innerHTML = '<p>Just like these cats, I want to cuddle with you forever! 🐱💕</p>';
+                }, 6000);
+            });
+            
+            // Hearts animation
+            heartsBtn.addEventListener('click', function() {
+                defaultMessage.classList.add('hidden');
+                animationArea.innerHTML = '';
+                promiseContainer.style.display = 'none';
+                specialMessage.style.display = 'none';
+                
+                for (let i = 0; i < 25; i++) {
+                    const heart = document.createElement('div');
+                    heart.classList.add('hearts');
+                    
+                    // Different heart emojis
+                    const heartEmojis = ['❤️', '🧡', '💛', '💚', '💙', '💜', '🖤', '🤍', '🤎', '💖', '💗', '💓', '💞', '💕', '💘', '💝'];
+                    heart.innerHTML = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+                    
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.animationDelay = Math.random() * 2 + 's';
+                    heart.style.fontSize = (Math.random() * 30 + 20) + 'px';
+                    animationArea.appendChild(heart);
+                }
+                
+                // Reset after animation
+                setTimeout(() => {
+                    animationArea.innerHTML = '<p>My heart is always yours, Hredy! More than all these hearts combined! 💖😻</p>';
+                }, 6000);
+            });
+            
+            // Promises display
+            promiseBtn.addEventListener('click', function() {
+                defaultMessage.classList.add('hidden');
+                animationArea.innerHTML = '<p>These are not just words, these are my solemn cat promises to you! 🐾📜</p>';
+                promiseContainer.style.display = 'block';
+                specialMessage.style.display = 'none';
+            });
+            
+            // Special Hredy message
+            specialBtn.addEventListener('click', function() {
+                defaultMessage.classList.add('hidden');
+                animationArea.innerHTML = '';
+                
+                // Create fish animation for Hredy
+                for (let i = 0; i < 15; i++) {
+                    const fish = document.createElement('div');
+                    fish.classList.add('fish');
+                    fish.innerHTML = '🐟';
+                    fish.style.left = Math.random() * 100 + '%';
+                    fish.style.animationDelay = Math.random() * 2 + 's';
+                    fish.style.fontSize = (Math.random() * 25 + 25) + 'px';
+                    animationArea.appendChild(fish);
+                }
+                
+                promiseContainer.style.display = 'none';
+                specialMessage.style.display = 'block';
+                
+                // Reset after animation
+                setTimeout(() => {
+                    animationArea.innerHTML = '<p>Just like cats love fish, I love you, Hredy! 🐟❤️</p>';
+                }, 6000);
+            });
+            
+            // Photo upload functionality
+            uploadArea.addEventListener('click', function() {
+                photoInput.click();
+            });
+            
+            photoInput.addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        photoPreview.src = e.target.result;
+                        photoPreview.style.display = 'block';
+                        uploadArea.querySelector('i').style.display = 'none';
+                        
+                        // Add a cute message
+                        const message = document.createElement('p');
+                        message.textContent = "Beautiful! Just like you! 😻";
+                        message.style.color = "#ff6b9d";
+                        message.style.fontWeight = "bold";
+                        message.style.marginTop = "10px";
+                        
+                        // Remove previous message if exists
+                        const prevMsg = uploadArea.querySelector('p');
+                        if (prevMsg && prevMsg.textContent.includes("Beautiful")) {
+                            uploadArea.removeChild(prevMsg);
+                        }
+                        
+                        uploadArea.appendChild(message);
+                    };
+                    
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            // Create initial floating cats in header
+            const header = document.querySelector('.header');
+            for (let i = 0; i < 12; i++) {
+                const cat = document.createElement('div');
+                cat.classList.add('cat');
+                
+                const catEmojis = ['🐱', '😺', '😸', '😹', '😻'];
+                cat.innerHTML = catEmojis[Math.floor(Math.random() * catEmojis.length)];
+                
+                cat.style.left = Math.random() * 100 + '%';
+                cat.style.top = Math.random() * 100 + '%';
+                cat.style.animationDelay = Math.random() * 4 + 's';
+                cat.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                header.appendChild(cat);
+            }
+            
+            // Add a secret message if they type "Hredy" in the birthday field
+            birthdayInput.addEventListener('input', function() {
+                if (birthdayInput.value.toLowerCase().includes('hredy')) {
+                    errorMsg.innerHTML = "That's your name silly! But I do love saying it! ❤️";
+                    errorMsg.style.color = "#ff6b9d";
+                    errorMsg.style.display = 'block';
+                } else {
+                    errorMsg.innerHTML = "Oops! That's not the right birthday. Try again! 🐾";
+                    errorMsg.style.color = "#ff4444";
+                }
+            });
+        });
+    </script>
+</body>
+</html>
